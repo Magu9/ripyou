@@ -107,5 +107,6 @@ export const SignUp: SFC<IProps> = props => {
         </div>
       )}
     </form>
+    
   );
 };
