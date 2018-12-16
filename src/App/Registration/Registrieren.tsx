@@ -1,6 +1,7 @@
-import { SFC, ChangeEvent, FormEvent, useState } from "react";
-import * as React from "react";
 
+import * as React from "react";
+import { SFC, ChangeEvent, FormEvent, useState } from "react";
+import "./register.css";
 export interface ISignUpData {
   firstName: string;
   emailAddress: string;
@@ -56,57 +57,62 @@ export const SignUp: SFC<IProps> = props => {
     const firstNameValidationError = validateFirstName(firstName);
     const emailAddressValidationError = validateEmailAddress(emailAddress);
     if (firstNameValidationError === "" && emailAddressValidationError === "") {
-      const result = props.onSignUp({
-        emailAddress,
-        firstName
-      });
+      const result = {
+        message: "Congratulations, you have successfully signed up!",
+        success: true
+      };
       setSubmitResult(result);
       setSubmitted(true);
     }
   };
 
+  
   return (
-    <form noValidate={true} onSubmit={handleSubmit}>
+    <div className="container text-center">
       <div className="row">
-        <label htmlFor="firstName">First name</label>
-        <input
-          type="text"
-          id="firstName"
-          value={firstName}
-          onChange={handleFirstNameChange}
-        />
-        <span className="error">{firstNameError}</span>
-      </div>
+        <form noValidate={true} onSubmit={handleSubmit}>
+          <div className="row">
+            <label htmlFor="firstName">First name</label>
+            <input
+              type="text"
+              id="firstName"
+              value={firstName}
+              onChange={handleFirstNameChange}
+            />
+            <span className="error">{firstNameError}</span>
+          </div>
 
-      <div className="row">
-        <label htmlFor="emailAddress">Email address</label>
-        <input
-          type="text"
-          id="emailAddress"
-          value={emailAddress}
-          onChange={handleEmailAddressChange}
-        />
-        <span className="error">{emailAddressError}</span>
-      </div>
+          <div className="row">
+            <label htmlFor="emailAddress">Email address</label>
+            <input
+              type="text"
+              id="emailAddress"
+              value={emailAddress}
+              onChange={handleEmailAddressChange}
+            />
+            <span className="error">{emailAddressError}</span>
+          </div>
 
-      <div className="row">
-        <button type="submit" disabled={submitted && submitResult.success}>
-          Sign Up
-        </button>
-      </div>
+          <div className="row">
+            <button type="submit" disabled={submitted && submitResult.success}>
+              Sign Up
+            </button>
+          </div>
 
-      {submitted && (
-        <div className="row">
-          <span
-            className={
-              submitResult.success ? "submit-success" : "submit-failure"
-            }
-          >
-            {submitResult.message}
-          </span>
-        </div>
-      )}
-    </form>
+          {submitted && (
+            <div className="row">
+              <span
+                className={
+                  submitResult.success ? "submit-success" : "submit-failure"
+                }
+              >
+                {submitResult.message}
+              </span>
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
     
   );
 };
