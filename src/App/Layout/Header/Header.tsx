@@ -1,8 +1,9 @@
 import * as React from "react";
 
 import "./Header.css";
-import { SignUp, ISignUpData } from "../../Registration/Registrieren";
-import Login from "../../Login/Login";
+import { Registrieren, IRegDaten } from "../../Registration/Registrieren";
+import { Login, ILogDaten } from "../../Login/Login";
+
 import { Link } from "react-router-dom";
 
 
@@ -73,7 +74,10 @@ export default class Header extends React.Component {
                 
                 </li>
                 <li>
-                  <Login />
+                <Link to="/Login" className="">
+                <span className="glyphicon glyphicon-user" />
+      <span> Login</span>
+                </Link>
                 </li>
                 <li>
                   <form className="form-inline my-2 my-lg-0">

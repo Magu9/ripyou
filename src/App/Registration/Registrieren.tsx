@@ -2,63 +2,63 @@
 import * as React from "react";
 import { SFC, ChangeEvent, FormEvent, useState } from "react";
 import "./register.css";
-export interface ISignUpData {
-  firstName: string;
-  emailAddress: string;
+export interface IRegDaten {
+  Name: string;
+  email: string;
 }
-export interface ISignUpResult {
+export interface IRegklappt {
   success: boolean;
   message: string;
 }
 
 interface IProps {
-  onSignUp: (data: ISignUpData) => ISignUpResult;
+  onRegistrieren: (data: IRegDaten) => IRegklappt;
 }
 
-export const SignUp: SFC<IProps> = props => {
-  const [firstName, setFirstName] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [emailAddressError, setEmailAddressError] = useState("");
+export const Registrieren: SFC<IProps> = props => {
+  const [Name, setName] = useState("");
+  const [NameError, setNameError] = useState("");
+  const [email, setemail] = useState("");
+  const [emailError, setemailError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitResult, setSubmitResult]: [
-    ISignUpResult,
-    (result: ISignUpResult) => void
+    IRegklappt,
+    (result: IRegklappt) => void
   ] = useState({ success: false, message: "" });
 
-  const handleFirstNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.currentTarget.value);
-    validateFirstName(e.currentTarget.value);
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value);
+    validateName(e.currentTarget.value);
   };
 
-  const validateFirstName = (value: string): string => {
-    const error = value ? "" : "You must enter your first name";
-    setFirstNameError(error);
+  const validateName = (value: string): string => {
+    const error = value ? "" : "Gib nen Namen ein";
+    setNameError(error);
     return error;
   };
 
-  const handleEmailAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmailAddress(e.currentTarget.value);
-    validateEmailAddress(e.currentTarget.value);
+  const handleemailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setemail(e.currentTarget.value);
+    validateemail(e.currentTarget.value);
   };
 
-  const validateEmailAddress = (value: string): string => {
+  const validateemail = (value: string): string => {
     const error = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       value
     )
       ? ""
-      : "You must enter a valid email address";
-    setEmailAddressError(error);
+      : "Korrektes Format für die email benutzen: xx@yy.zz";
+    setemailError(error);
     return error;
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const firstNameValidationError = validateFirstName(firstName);
-    const emailAddressValidationError = validateEmailAddress(emailAddress);
-    if (firstNameValidationError === "" && emailAddressValidationError === "") {
+    const NameValidationError = validateName(Name);
+    const emailValidationError = validateemail(email);
+    if (NameValidationError === "" && emailValidationError === "") {
       const result = {
-        message: "Congratulations, you have successfully signed up!",
+        message: "Dein Passwort wurde dir per mail zugeschickt",
         success: true
       };
       setSubmitResult(result);
@@ -72,30 +72,30 @@ export const SignUp: SFC<IProps> = props => {
       <div className="row">
         <form noValidate={true} onSubmit={handleSubmit}>
           <div className="row">
-            <label htmlFor="firstName">First name</label>
+            <label htmlFor="Name">Vorname, Name</label>
             <input
               type="text"
-              id="firstName"
-              value={firstName}
-              onChange={handleFirstNameChange}
+              id="Name"
+              value={Name}
+              onChange={handleNameChange}
             />
-            <span className="error">{firstNameError}</span>
+            <span className="error">{NameError}</span>
           </div>
 
           <div className="row">
-            <label htmlFor="emailAddress">Email address</label>
+            <label htmlFor="email">e-Mail Adresse</label>
             <input
               type="text"
-              id="emailAddress"
-              value={emailAddress}
-              onChange={handleEmailAddressChange}
+              id="email"
+              value={email}
+              onChange={handleemailChange}
             />
-            <span className="error">{emailAddressError}</span>
+            <span className="error">{emailError}</span>
           </div>
 
           <div className="row">
             <button type="submit" disabled={submitted && submitResult.success}>
-              Sign Up
+              Registrieren
             </button>
           </div>
 
